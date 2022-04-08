@@ -53,3 +53,15 @@ form input {
 form a {
     cursor: pointer;
 }
+
+@media(max-width: 840px) {
+    .masterContainer {
+        padding: 0px 20px;
+    }
+}
+
+@media(max-width: 630px) {
+    .info-container {
+        display: none;
+    }
+}
