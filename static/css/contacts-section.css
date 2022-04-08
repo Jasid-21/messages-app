@@ -1,0 +1,145 @@
+:root {
+    --scroll-width: 7px;
+}
+
+header.contacts-header {
+    height: 10%;
+    background-color: rgb(197, 197, 197);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contacts-header > .self-info {
+    display: flex;
+    align-items: center;
+}
+
+.self_name {
+    font-weight: 700;
+    font-size: 18px;
+    font-style: italic;
+    margin-left: 10px;
+}
+
+.self_profile-container {
+    width: 40px;
+    height: 40px;
+
+    border: 1px solid gray;
+    border-radius: 50%;
+    background-color: rgb(250, 250, 250);
+
+    font-weight: 700;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.options-container {
+    display: flex;
+}
+
+.options-container > svg {
+    --size: 20px;
+    width: var(--size) !important;
+    height: var(--size) !important;
+    margin-left: 30px;
+}
+
+.search-section {
+    height: 8%;
+    padding: 0px;
+    border-bottom: 1px solid gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-section form {
+    width: 90%;
+    height: 35px;
+    background-color: rgb(235, 235, 235);
+    border-radius: 7px;
+    display: flex;
+}
+
+.search-section form button {
+    width: 20%;
+    margin: 0px;
+    background-color: transparent;
+    border: none;
+    color: rgb(90, 90, 90) !important;
+}
+
+.search-section form input {
+    margin: 0px;
+    background-color: transparent;
+    border: none;
+    color: gray;
+}
+
+.chatlist-container {
+    height: 82%;
+    padding: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.chat-item {
+    height: 70px;
+    padding: 0px;
+    display: flex;
+}
+
+.chat-item.active-chat {
+    background-color: rgb(230, 230, 230) !important;
+}
+
+.chat-item:hover {
+    cursor: pointer;
+    background-color: rgb(245, 245, 245);
+}
+
+.profile_img-container {
+    width: 18%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile_img {
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 50%;
+    font-weight: 600;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-info-container {
+    border-bottom: 1px solid gray;
+    width: 82%;
+    display: flex;
+    align-content: center;
+}
+
+.chat-info-container > div {
+    padding: 0px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.chat-info-container > div > div {
+    overflow: hidden;
+}
+
+.chat-info-container > div > div > * {
+    white-space: nowrap;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('components/header.html') %>
+    <link rel="stylesheet" href="css/signup.css">
+    <link rel="stylesheet" href="css/signup-form.css">
+    <link rel="stylesheet" href="css/login-form.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="masterContainer" class="masterContainer container-fluid">
+        <div class="info-container">
+            <h1>Signup to our online chat</h1>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cum odit temporibus minus, vel nisi, consequatur quis corrupti id repudiandae magnam error veritatis sapiente perferendis, itaque doloribus dolores? Provident, dolores esse.</p>
+        </div>
+
+        <form class="signup-form">
+            <h1>Signup</h1>
+            <br>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="sefirot hunter" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="mb-3">
+                <label for="confirm" class="form-label">Confirm password</label>
+                <input type="password" class="form-control" id="confirm" name="confirm" required>
+            </div>
+
+            <button type="submit" class="submit-btn container">Join for free!</button>
+            <br>
+            <br>
+            <div class="mb-3 switch_form-container container">
+                <p>
+                    Alredy have an account? <a class="login-dir">Login</a>
+                </p>
+            </div>
+        </form>
+
+        <form class="login-form" action="/login" method="post">
+            <h1>Login</h1>
+            <br>
+            <div class="mb-3">
+                <label for="username" class="form-label">Email address</label>
+                <input type="text" class="form-control" id="login_username" name="username" placeholder="Sefirot Hunter" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="login_password" name="password" required>
+            </div>
+
+            <button type="submit" class="submit-btn container">Log In!</button>
+            <br>
+            <br>
+            <div class="mb-3 switch_form-container container">
+                <p>
+                    Do not have an account? <a class="signup-dir">Sign Up</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <%- include('components/footer.html') %>
+    <% if(locals.login){ %>
+        <script>
+            signup_form.hidden = 'none';
+        </script>
+    <% }else{ %>
+        <script>
+            login_form.hidden = 'none';
+        </script>
+    <% } %>
+    <script src="js/signup.js"></script>
+</body>
+</html>

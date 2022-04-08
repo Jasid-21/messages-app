@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('components/header.html') %>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/contacts-section.css">
+    <link rel="stylesheet" href="css/chat-section.css">
+    <title>Document</title>
+</head>
+<body>
+    <span id="user_id" hidden><%= user_id %></span>
+    <div id="masterContainer" class="masterContainer container-fluid">
+        <div class="contacts-selector">
+            <header class="contacts-header container-fluid">
+                <div class="self-info">
+                    <div class="self_profile-container">
+                        <%= name[0] %>
+                    </div>
+                    <div class="self_name">
+                        <%= name %>
+                    </div>
+                </div>
+                
+                <div class="options-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
+                        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+                    </svg>
+                    <br>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                </div>
+            </header>
+            <div class="search-section container-fluid">
+                <form>
+                    <button type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </button>
+                    <input type="text" name="username" id="search_username" class="container-fluid">
+                </form>
+            </div>
+            <div class="chatlist-container container">
+                <% for(var i=0; i<Contacts.length; i++){ %>
+                    <div class="chat-item container-fluid" data-id="<%= Contacts[i].Id %>">
+                        <div class="profile_img-container">
+                            <div class="profile_img">
+                                <%= Contacts[i].Name[0] %>
+                            </div>
+                        </div>
+                        <div class="chat-info-container">
+                            <div class="container-fluid">
+                                <div class="chat-item-name container-fluid">
+                                    <h6><%= Contacts[i].Name %></h6>
+                                </div>
+                                <div class="chat-last_msg-container container-fluid">
+                                    <div>Hola</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+        <div class="background-chat-section container-fluid">
+            <div class="gray-background container-fluid">
+                <div class="instructions">
+                    <h4 class="h1">
+                        Wellcome to our chat web application
+                    </h4>
+                    <p>For start chating, please select a contact on your left side navigation bar</p>
+                </div>
+            </div>
+        </div>
+        <div class="chat-container container-fluid" hidden>
+            <header class="chat-header">
+                <div class="chat_profile-img"></div>
+                <h6 class="chat_name"></h6>
+            </header>
+            <div class="messages-container"></div>
+            <div class="message-input-section container-fluid">
+                <form id="message-form" class="message-form">
+                    <input type="text" name="message" class="message-input" placeholder="Type a message">
+                    <button type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <%- include('components/footer.html') %>
+    <script src="js/socket.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

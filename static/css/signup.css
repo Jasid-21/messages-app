@@ -1,0 +1,55 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.masterContainer {
+    width: 100vw;
+    min-height: 100vh;
+
+    margin: 0px;
+    padding: 0px;
+    
+    background: rgb(74,193,55);
+    background: linear-gradient(190deg, rgba(74,193,55,1) 82%, rgba(255,255,255,1) 100%);
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.info-container {
+    width: 400px;
+    color: white;
+
+    margin-top: -100px;
+}
+
+.info-container h1 {
+    font-size: 50px;
+}
+
+form {
+    width: 350px;
+    padding: 20px;
+
+    border-radius: 20px;
+    background-color: white;
+
+    box-shadow: 2px 2px 15px black;
+}
+
+form  h1 {
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+    color: rgb(83, 83, 83);
+}
+
+form input {
+    border: 1px solid gray;
+}
+
+form a {
+    cursor: pointer;
+}

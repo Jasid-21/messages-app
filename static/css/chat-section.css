@@ -1,0 +1,112 @@
+header.chat-header {
+    height: 10%;
+    background-color: rgb(197, 197, 197);
+    padding: 0px 30px 0px 30px;
+
+    display: flex;
+    align-items: center;
+}
+
+.chat_profile-img {
+    border: 1px solid gray;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-weight: 700;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat_name {
+    margin-left: 10px;
+}
+
+
+
+
+
+
+/* Messages viewer section */
+
+.messages-container {
+    height: 80%;
+    background-color: rgb(245, 245, 245);
+    padding: 50px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.message-item-container {
+    margin-bottom: 5px;
+    display: flex;
+}
+
+.own-message {
+    justify-content: flex-end;
+}
+
+.contact-message {
+    justify-content: flex-start;
+}
+
+.own-message > .message-item {
+    background-color: rgba(44, 202, 44, 0.5);
+    border: 2px solid green;
+}
+
+.contact-message > .message-item {
+    background-color: rgba(138, 138, 138, 0.5);
+    border: 2px solid gray;
+}
+
+.message-item {
+    max-width: 50%;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+
+
+
+
+
+/* Send message form section*/
+
+.message-input-section {
+    height: 10%;
+    background-color: rgb(220, 220, 220);
+
+    display: flex;
+}
+
+.message-form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.message-form * {
+    height: 70%;
+}
+
+.message-form input {
+    width: 92%;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+.message-form button {
+    width: 8%;
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.message-form button:hover {
+    color: rgb(52, 175, 52);
+}

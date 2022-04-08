@@ -1,0 +1,22 @@
+.signup-form {
+    min-height: 400px;
+}
+
+.submit-btn {
+    height: 30px;
+    background-color: rgb(0, 97, 68);
+    border: rgb(0, 97, 68);
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+}
+
+.switch_form-container p {
+    width: 100%;
+    text-align: center;
+}
+
+.signup-dir {
+    color: blue;
+    text-decoration: none !important;
+}
