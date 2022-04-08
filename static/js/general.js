@@ -9,6 +9,8 @@ const messages_container_section = document.querySelector('.messages-container')
 const init_page = document.querySelector('.background-chat-section');
 const chat_container = document.querySelector('.chat-container');
 const chat_profile_img = document.querySelector('.chat_profile-img');
+const contact_selector = document.querySelector('.contacts-selector');
+var hidden = false;
 
 
 var active_chat = {user_id: "", chat_id: ""};
@@ -47,4 +49,16 @@ function create_chat_item(msg){
     message_container.appendChild(message_item);
 
     return message_container;
+}
+
+function hide_reveal_sidenav(button){
+    if(!hidden) {
+        contact_selector.style.left = '-350px';
+        button.style.left = '0px';
+        hidden = true;
+    }else{
+        contact_selector.style.left = '0px';
+        button.style.left = '350px';
+        hidden = false;
+    }
 }

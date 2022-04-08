@@ -192,29 +192,33 @@ app.post('/send_message', [verify_session, upload.single('')] , function(req, re
 
     const contact_id = JSON.parse(chat_object).chat_id;
     const message = req.body.message;
-    const date = moment().format('YYYY-MM-DD hh:mm:ss');
+    if(message){
+        const date = moment().format('YYYY-MM-DD hh:mm:ss');
 
-    connection.query(`INSERT INTO Messages (Emiter_id, Receiver_id, Message, Date, Viewed) 
-    VALUES ('${user_id}', '${contact_id}', '${message}', '${date}', '0')`, function(error){
-        if(error){
-            console.log(error);
-            resp.status(500).send();
-        }else{
-            console.log("Sent!");
-            const object = {
-                Emiter_id: user_id,
-                Receiver_id: contact_id,
-                Message: message,
-                Date: date,
-                Viewed: 0
+        connection.query(`INSERT INTO Messages (Emiter_id, Receiver_id, Message, Date, Viewed) 
+        VALUES ('${user_id}', '${contact_id}', '${message}', '${date}', '0')`, function(error){
+            if(error){
+                console.log(error);
+                resp.status(500).send();
+            }else{
+                console.log("Sent!");
+                const object = {
+                    Emiter_id: user_id,
+                    Receiver_id: contact_id,
+                    Message: message,
+                    Date: date,
+                    Viewed: 0
+                }
+
+                const socket_id = get_socket_id(contact_id)
+                console.log(socket_id);
+                io.to(socket_id).emit('message', object);
+                resp.send({status: 1, data: object});
             }
-
-            const socket_id = get_socket_id(contact_id)
-            console.log(socket_id);
-            io.to(socket_id).emit('message', object);
-            resp.send({status: 1, data: object});
-        }
-    });
+        });
+    }else{
+        resp.send({status: 0});
+    }
 });
 
 
