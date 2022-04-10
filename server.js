@@ -174,7 +174,7 @@ app.get('/', verify_session, function(req, resp){
 
 app.get('/get_messages', verify_session, function(req, resp){
     const user_id = req.user_id;
-    connection.query(`SELECT Emiter_id, Receiver_id, Message, Date, Viewed FROM Messages 
+    connection.query(`SELECT Id, Emiter_id, Receiver_id, Message, Date, Viewed FROM Messages 
     WHERE Messages.Emiter_id = '${user_id}' 
     OR Messages.Receiver_id = '${user_id}'`, function(error, data){
         if(error){
@@ -196,13 +196,14 @@ app.post('/send_message', [verify_session, upload.single('')] , function(req, re
         const date = moment().format('YYYY-MM-DD hh:mm:ss');
 
         connection.query(`INSERT INTO Messages (Emiter_id, Receiver_id, Message, Date, Viewed) 
-        VALUES ('${user_id}', '${contact_id}', '${message}', '${date}', '0')`, function(error){
+        VALUES ('${user_id}', '${contact_id}', '${message}', '${date}', '0')`, function(error, ret){
             if(error){
                 console.log(error);
                 resp.status(500).send();
             }else{
                 console.log("Sent!");
                 const object = {
+                    Id: ret.insertId,
                     Emiter_id: user_id,
                     Receiver_id: contact_id,
                     Message: message,

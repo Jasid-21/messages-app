@@ -2,14 +2,19 @@ const signup_form = document.querySelector('.signup-form');
 const login_form = document.querySelector('.login-form');
 const login_dir = document.querySelector('.login-dir');
 const signup_dir = document.querySelector('.signup-dir');
+
 const chat_items = document.querySelectorAll('.chat-item');
 const chat_name = document.querySelector('.chat_name');
+
 const message_form = document.querySelector('#message-form');
 const messages_container_section = document.querySelector('.messages-container');
+
 const init_page = document.querySelector('.background-chat-section');
 const chat_container = document.querySelector('.chat-container');
 const chat_profile_img = document.querySelector('.chat_profile-img');
+
 const contact_selector = document.querySelector('.contacts-selector');
+const sidenav_btn = document.querySelector('.sidenav_btn')
 var hidden = false;
 
 
@@ -53,12 +58,12 @@ function create_chat_item(msg){
 
 function hide_reveal_sidenav(button){
     if(!hidden) {
-        contact_selector.style.left = '-350px';
+        contact_selector.style.left = '-340px';
         button.style.left = '0px';
         hidden = true;
     }else{
         contact_selector.style.left = '0px';
-        button.style.left = '350px';
+        button.style.left = '340px';
         hidden = false;
     }
 }

@@ -7,8 +7,8 @@
 .contacts-selector {
     background-color: white;
     border-right: 1px solid gray;
-    width: 350px !important;
-    min-width: 350px;
+    width: 340px !important;
+    min-width: 340px;
     padding: 0px;
 
     transition-property: left;
@@ -50,7 +50,7 @@
 .sidenav_btn {
     position: absolute;
     top: 50px;
-    left: 350px;
+    left: 340px;
 
     border: 2px solid lightgray;
     border-radius: 5px;
@@ -59,6 +59,8 @@
 
     transition-property: left;
     transition-duration: 300ms;
+
+    display: none;
 }
 
 ::-webkit-scrollbar {
@@ -86,5 +88,9 @@
         height: 100vh;
         left: 0px;
         position: absolute;
+    }
+
+    .sidenav_btn {
+        display: block;
     }
 }

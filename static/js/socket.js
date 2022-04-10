@@ -1,7 +1,18 @@
 socket.on('message', function(message){
     console.log(message);
     chats.push(message);
-    const bubble = create_chat_item(message);
-    messages_container_section.appendChild(bubble);
-    message_form.reset()
+    if(active_chat.chat_id == message.Emiter_id){
+        const bubble = create_chat_item(message);
+        messages_container_section.appendChild(bubble);
+        messages_container_section.scrollTop = messages_container_section.scrollHeight;
+    }
+    console.log('line 09');
+
+    for(var item of chat_items){
+        const chat_id = item.getAttribute('data-id');
+        if(chat_id == message.Emiter_id || chat_id == message.Receiver_id){
+            item.querySelector('.chat-last_msg-container').innerHTML = message.Message;
+            break;
+        }
+    }
 });
