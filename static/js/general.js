@@ -3,6 +3,10 @@ const login_form = document.querySelector('.login-form');
 const login_dir = document.querySelector('.login-dir');
 const signup_dir = document.querySelector('.signup-dir');
 
+const new_chat_option = document.querySelector('.new_chat_option');
+const new_contact_option = document.querySelector('.new_contact_option');
+
+const chatlist_container = document.querySelector('.chatlist-container');
 const chat_items = document.querySelectorAll('.chat-item');
 const chat_name = document.querySelector('.chat_name');
 
@@ -17,11 +21,27 @@ const contact_selector = document.querySelector('.contacts-selector');
 const sidenav_btn = document.querySelector('.sidenav_btn')
 var hidden = false;
 
+const new_contact_form = document.querySelector('.new_contact');
+const new_contact_cancel_btn = new_contact_form.querySelector('.cancel_btn');
+const new_contact_contacts_container = new_contact_form.querySelector('.contacts-container');
+const alert_messages = document.querySelector('.alert_messages');
+
+const new_chat_window = document.querySelector('.new_chat');
+const new_chat_cancel_btn = new_chat_window.querySelector('.cancel_btn');
+const new_chat_contacts_container = new_chat_window.querySelector('.contacts-container');
+
 
 var active_chat = {user_id: "", chat_id: ""};
-var chats = new Array();
+var general_messages = new Array();
+var contacts = new Array();
 const socket = io();
 
+
+
+
+
+
+// functions
 
 function handle_http(http){
     console.log(`readyState: ${http.readyState}`);
@@ -55,6 +75,71 @@ function create_chat_item(msg){
 
     return message_container;
 }
+
+function create_chatlist_item(id, name){
+    const chat_item = document.createElement('div');
+    chat_item.classList.add('chat-item', 'container-fluid');
+    chat_item.setAttribute('data-id', id);
+
+        const profile_img_container = document.createElement('div');
+        profile_img_container.classList.add('profile_img-container');
+
+            const profile_img = document.createElement('div');
+            profile_img.classList.add('profile_img');
+            profile_img.innerHTML = name[0];
+        profile_img_container.appendChild(profile_img);
+
+        const chat_info_container = document.createElement('div');
+        chat_info_container.classList.add('chat-info-container');
+
+            const container_fluid = document.createElement('div');
+            container_fluid.classList.add('container-fluid');
+
+                const chat_item_name = document.createElement('div');
+                chat_item_name.classList.add('chat-item-name', 'container-fluid');
+                    const h6 = document.createElement('h6');
+                    h6.innerHTML = name;
+                chat_item_name.appendChild(h6);
+
+                const last_message_container = document.createElement('div');
+                last_message_container.classList.add('chat-last_msg-container');
+                    const div = document.createElement('div');
+                last_message_container.appendChild(div);
+            container_fluid.appendChild(chat_item_name);
+            container_fluid.appendChild(last_message_container);
+        chat_info_container.appendChild(container_fluid);
+    chat_item.appendChild(profile_img_container);
+    chat_item.appendChild(chat_info_container);
+
+    chat_item.addEventListener('click', function(e){
+        e.preventDefault();
+        init_page.hidden = true;
+        chat_container.hidden = false;
+        messages_container_section.innerHTML = null;
+        const contact_id = this.getAttribute('data-id');
+        console.log(contact_id);
+        set_active_chat(contact_id);
+        contact_selector.style.left = '-340px';
+        sidenav_btn.style.left = '0px';
+        hidden = true;
+
+        chat_profile_img.innerHTML = name[0]
+        chat_name.innerHTML = name;
+
+        console.log(general_messages);
+        for(var i=0; i<general_messages.length; i++){
+            if(general_messages[i].Emiter_id == contact_id || general_messages[i].Receiver_id == contact_id){
+                const bubble = create_chat_item(general_messages[i]);
+                messages_container_section.appendChild(bubble);
+                messages_container_section.scrollTop = messages_container_section.scrollHeight;
+            }
+        }
+    });
+
+    return chat_item;
+}
+
+
 
 function hide_reveal_sidenav(button){
     if(!hidden) {

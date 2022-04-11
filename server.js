@@ -160,14 +160,21 @@ app.post('/login', upload.single(""), function(req, resp){
 app.get('/', verify_session, function(req, resp){
     const user_id = req.user_id;
     const name = req.username;
-    connection.query(`SELECT Id, Name FROM Contacts INNER JOIN Users 
+
+    resp.render('index', {user_id, name});
+});
+
+app.get('/get_contacts', verify_session, function(req, resp){
+    const user_id = req.user_id;
+    connection.query(`SELECT Id, Name FROM Contacts 
+    INNER JOIN Users 
     ON Contacts.Contact_id = Users.Id 
-    AND Contacts.User_id = '${user_id}'`, function(error, data){
+    AND Contacts.User_id = '${user_id}';`, function(error, data){
         if(error){
             console.log(error);
-            resp.send("Error geting session information. Please try later...");
+            resp.status(500).send();
         }else{
-            resp.render('index', {Contacts: data, user_id, name});
+            resp.send({user_id, contacts: data});
         }
     });
 });
@@ -220,6 +227,47 @@ app.post('/send_message', [verify_session, upload.single('')] , function(req, re
     }else{
         resp.send({status: 0});
     }
+});
+
+app.post('/new_contact', [verify_session, upload.single("")], function(req, resp){
+    const user_id = req.user_id;
+    const nickname = req.body.username;
+
+    connection.query(`SELECT Id FROM Users WHERE Name = '${nickname}'`, function(error, data){
+        if(error){
+            console.log(error);
+            resp.status(500).send();
+        }else{
+            if(data.length > 0){
+                const contact_id = data[0].Id;
+                connection.query(`SELECT * FROM Contacts WHERE User_id = '${user_id}' 
+                AND Contact_id = '${contact_id}'`, function(error, data){
+                    if(error){
+                        console.log(error);
+                        resp.status(500).send();
+                    }else{
+                        console.log("data: ", data);
+                        if(data.length > 0){
+                            resp.send({status: 0, message: "This contact alredy exist..."});
+                        }else{
+                            connection.query(`INSERT INTO Contacts (User_id, Contact_id) 
+                            VALUES ('${user_id}', '${contact_id}'), ('${contact_id}', '${user_id}')`, function(error){
+                                if(error){
+                                    console.log(error);
+                                    resp.status(500).send();
+                                }else{
+                                    resp.status(200).send();
+                                }
+                            });
+                        }
+                    }
+                });
+            }else{
+                console.log("User not found...");
+                resp.status(404).send();
+            }
+        }
+    });
 });
 
 

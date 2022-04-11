@@ -47,6 +47,7 @@ header.contacts-header {
     width: var(--size) !important;
     height: var(--size) !important;
     margin-left: 30px;
+    cursor: pointer;
 }
 
 .search-section {

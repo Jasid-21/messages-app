@@ -1,71 +1,71 @@
 document.addEventListener('DOMContentLoaded', function(){
-    const user_id = document.querySelector('#user_id');
-    localStorage.setItem('user_id', user_id.innerHTML);
-    active_chat.user_id = user_id.innerHTML;
+    var http = new XMLHttpRequest();
+    http.open('GET', '/get_contacts');
+    http.onreadystatechange = function(){
+        if(http.readyState==4 && http.status==200){
+            var resp = http.responseText;
+            resp = JSON.parse(resp);
 
-    socket.emit('set_user_id', user_id.innerHTML);
+            const user_id = resp.user_id;
+            contacts = resp.contacts;
+
+            localStorage.setItem('user_id', user_id);
+            socket.emit('set_user_id', user_id);
+
+            get_messages();
+        }else{
+            handle_http(http);
+        }
+    }
+    http.send(null);
 });
 
-var http = new XMLHttpRequest();
-http.open('GET', '/get_messages');
-http.onreadystatechange = function(){
-    if(http.readyState==4 && http.status==200){
-        var resp = http.responseText;
-        resp = JSON.parse(resp);
+function get_messages(){
+    var http = new XMLHttpRequest();
+    http.open('GET', '/get_messages');
+    http.onreadystatechange = function(){
+        if(http.readyState==4 && http.status==200){
+            var resp = http.responseText;
+            resp = JSON.parse(resp);
 
-        if(resp.status == 1){
-            chats = resp.data;
+            if(resp.status == 1){
+                general_messages = resp.data;
 
-            for(var item of chat_items){
-                const chat_id = item.getAttribute('data-id');
-                var message_id = -1;
-                var last_message = null;
-                for(var message of chats){
-                    if(message.Emiter_id == chat_id || message.Receiver_id == chat_id){
-                        if(message.Id > message_id){
-                            message_id = message.Id;
-                            last_message = message;
+                for(var contact of contacts){
+                    for(var message of general_messages){
+                        if(contact.Id == message.Emiter_id || contact.Id == message.Receiver_id){
+                            const chatlist_item = create_chatlist_item(contact.Id, contact.Name);
+                            chatlist_container.appendChild(chatlist_item);
+                            contact.active = true;
+                            break;
                         }
                     }
                 }
-                console.log(last_message);
-                item.querySelector('.chat-last_msg-container').innerHTML = last_message?last_message.Message:null;
+
+                const chat_items = document.querySelectorAll('.chat-item');
+                for(var item of chat_items){
+                    const chat_id = item.getAttribute('data-id');
+                    var message_id = -1;
+                    var last_message = null;
+                    for(var message of general_messages){
+                        if(message.Emiter_id == chat_id || message.Receiver_id == chat_id){
+                            if(message.Id > message_id){
+                                message_id = message.Id;
+                                last_message = message;
+                            }
+                        }
+                    }
+                    console.log(last_message);
+                    item.querySelector('.chat-last_msg-container').innerHTML = last_message?last_message.Message:null;
+                }
+            }else{
+                alert(resp.message);
             }
         }else{
-            alert(resp.message);
+            handle_http(http);
         }
-    }else{
-        handle_http(http);
     }
-}
-http.send(null);
-
-for(var item of chat_items){
-    item.addEventListener('click', function(e){
-        e.preventDefault();
-        init_page.hidden = true;
-        chat_container.hidden = false;
-        messages_container_section.innerHTML = null;
-        const contact_id = this.getAttribute('data-id');
-        console.log(contact_id);
-        set_active_chat(contact_id);
-        contact_selector.style.left = '-340px';
-        sidenav_btn.style.left = '0px';
-        hidden = true;
-
-        const name = this.querySelector('.chat-item-name');
-        chat_profile_img.innerHTML = name.childNodes[1].innerHTML[0];
-        chat_name.innerHTML = name.innerHTML;
-
-        console.log(chats);
-        for(var i=0; i<chats.length; i++){
-            if(chats[i].Emiter_id == contact_id || chats[i].Receiver_id == contact_id){
-                const bubble = create_chat_item(chats[i]);
-                messages_container_section.appendChild(bubble);
-                messages_container_section.scrollTop = messages_container_section.scrollHeight;
-            }
-        }
-    });
+    http.send(null);
 }
 
 message_form.addEventListener('submit', function(e){
@@ -83,7 +83,7 @@ message_form.addEventListener('submit', function(e){
             resp = JSON.parse(resp);
 
             if(resp.status == 1){
-                chats.push(resp.data);
+                general_messages.push(resp.data);
                 const bubble = create_chat_item(resp.data);
                 messages_container_section.appendChild(bubble);
                 messages_container_section.scrollTop = messages_container_section.scrollHeight;
@@ -103,3 +103,9 @@ message_form.addEventListener('submit', function(e){
     }
     http.send(formData);
 });
+
+
+// New chat
+    // Search a contact.
+// New contact
+    // Introduce nickname.

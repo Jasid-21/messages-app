@@ -1,0 +1,44 @@
+.new_chat h3 {
+    width: 100%;
+    text-align: center;
+}
+
+.new_chat .contacts-container {
+    min-height: 150px;
+    max-height: 200px;
+
+    border: 1px solid rgb(155, 155, 155);
+    border-radius: 5px;
+    background-color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.new_chat .contacts-container::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+}
+
+.new_chat .contacts-container::-webkit-scrollbar-track {
+    width: 5px;
+    background-color: transparent;
+}
+
+.new_chat .contacts-container::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: rgb(97, 97, 97);
+    border-radius: 5px;
+}
+
+.new_chat .contact-item {
+    border-bottom: 1px solid gray;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.new_chat .contact-item:hover {
+    font-weight: 700;
+}
