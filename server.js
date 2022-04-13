@@ -71,7 +71,17 @@ io.on('connection', function(socket){
                 }
             )
         }
-    })
+    });
+
+    socket.on('disconnect', function(){
+        for(var i=0; i<arp_imit.length; i++){
+            if(arp_imit[i].socket_id == socket.id){
+                arp_imit.splice(i, 1);
+                console.log(`User ${socket.id} disconnected...`);
+                break;
+            }
+        }
+    });
 })
 
 
@@ -153,6 +163,19 @@ app.post('/login', upload.single(""), function(req, resp){
             }else{
                 resp.send({status: 0, message: "User not found..."});
             }
+        }
+    });
+});
+
+app.get('/logout', function(req, resp){
+    const cookie = req.cookies['session_id'];
+
+    connection.query(`DELETE FROM Sessions WHERE Session = '${cookie}'`, function(error){
+        if(error){
+            console.log(error);
+            resp.status(500).send();
+        }else{
+            resp.status(200).send();
         }
     });
 });
@@ -256,7 +279,7 @@ app.post('/new_contact', [verify_session, upload.single("")], function(req, resp
                                     console.log(error);
                                     resp.status(500).send();
                                 }else{
-                                    resp.status(200).send();
+                                    resp.status(200).send({contact_id});
                                 }
                             });
                         }
@@ -376,3 +399,5 @@ async function get_user_id(username){
         })
     )
 }
+
+// Logout button

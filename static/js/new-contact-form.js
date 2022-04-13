@@ -2,13 +2,22 @@ new_contact_form.addEventListener('submit', function(e){
     e.preventDefault();
 
     const formData = new FormData(new_contact_form);
-    
+
     var http = new XMLHttpRequest();
     http.open('POST', '/new_contact');
     http.onreadystatechange = function(){
         if(http.readyState==4 && http.status==200){
+            alert_messages.innerHTML = "New contact added!";
             alert_messages.classList.remove('negative', 'neutral', 'inactive');
             alert_messages.classList.add('positive');
+
+            const contact_id = JSON.parse(http.responseText).contact_id;
+            const contactname = formData.get('username');
+            const contact = {
+                Id: contact_id,
+                Name: contactname
+            }
+            contacts.push(contact);
         }else{
             handle_http(http);
         }
@@ -20,6 +29,8 @@ new_contact_cancel_btn.addEventListener('click', function(e){
     e.preventDefault();
 
     new_contact_form.reset();
+    alert_messages.classList.remove('negative', 'neutral', 'positive');
+    alert_messages.classList.add('inactive');
     new_contact_form.style.top = '-500px';
 });
 

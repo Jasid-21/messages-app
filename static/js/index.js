@@ -55,7 +55,6 @@ function get_messages(){
                             }
                         }
                     }
-                    console.log(last_message);
                     item.querySelector('.chat-last_msg-container').innerHTML = last_message?last_message.Message:null;
                 }
             }else{
@@ -72,7 +71,6 @@ message_form.addEventListener('submit', function(e){
     e.preventDefault();
 
     var formData = new FormData(message_form);
-    console.log(active_chat);
     formData.append('chat_object', JSON.stringify(active_chat));
 
     var http = new XMLHttpRequest();
@@ -89,6 +87,7 @@ message_form.addEventListener('submit', function(e){
                 messages_container_section.scrollTop = messages_container_section.scrollHeight;
                 message_form.reset()
 
+                const chat_items = document.querySelectorAll('.chat-item');
                 for(var item of chat_items){
                     const chat_id = item.getAttribute('data-id');
                     if(chat_id == resp.data.Emiter_id || chat_id == resp.data.Receiver_id){
@@ -104,8 +103,19 @@ message_form.addEventListener('submit', function(e){
     http.send(formData);
 });
 
+logout_option.addEventListener('click', function(e){
+    e.preventDefault();
 
-// New chat
-    // Search a contact.
-// New contact
-    // Introduce nickname.
+    var http = new XMLHttpRequest();
+    http.open('GET', '/logout');
+    http.onreadystatechange = function(){
+        if(http.readyState==4 && http.status==200){
+            localStorage.removeItem('user_id');
+            document.cookie = "";
+            window.location.replace('/login');
+        }else{
+            handle_http(http);
+        }
+    }
+    http.send(null);
+});

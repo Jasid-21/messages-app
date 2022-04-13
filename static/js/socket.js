@@ -1,6 +1,6 @@
 socket.on('message', function(message){
     console.log(message);
-    chats.push(message);
+    general_messages.push(message);
     if(active_chat.chat_id == message.Emiter_id){
         const bubble = create_chat_item(message);
         messages_container_section.appendChild(bubble);
@@ -8,6 +8,7 @@ socket.on('message', function(message){
     }
     console.log('line 09');
 
+    const chat_items = document.querySelectorAll('.chat-item');
     for(var item of chat_items){
         const chat_id = item.getAttribute('data-id');
         if(chat_id == message.Emiter_id || chat_id == message.Receiver_id){

@@ -5,9 +5,9 @@ const signup_dir = document.querySelector('.signup-dir');
 
 const new_chat_option = document.querySelector('.new_chat_option');
 const new_contact_option = document.querySelector('.new_contact_option');
+const logout_option = document.querySelector('.logout_option');
 
 const chatlist_container = document.querySelector('.chatlist-container');
-const chat_items = document.querySelectorAll('.chat-item');
 const chat_name = document.querySelector('.chat_name');
 
 const message_form = document.querySelector('#message-form');
@@ -50,6 +50,7 @@ function handle_http(http){
 
 function set_active_chat(item_id){
     active_chat.chat_id = item_id;
+    const chat_items = document.querySelectorAll('.chat-item');
     for(var item of chat_items){
         const user_id = item.getAttribute('data-id');
         if(user_id == item_id){
@@ -117,7 +118,6 @@ function create_chatlist_item(id, name){
         chat_container.hidden = false;
         messages_container_section.innerHTML = null;
         const contact_id = this.getAttribute('data-id');
-        console.log(contact_id);
         set_active_chat(contact_id);
         contact_selector.style.left = '-340px';
         sidenav_btn.style.left = '0px';
@@ -126,7 +126,6 @@ function create_chatlist_item(id, name){
         chat_profile_img.innerHTML = name[0]
         chat_name.innerHTML = name;
 
-        console.log(general_messages);
         for(var i=0; i<general_messages.length; i++){
             if(general_messages[i].Emiter_id == contact_id || general_messages[i].Receiver_id == contact_id){
                 const bubble = create_chat_item(general_messages[i]);

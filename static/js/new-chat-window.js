@@ -9,7 +9,6 @@ new_chat_option.addEventListener('click', function(e){
 
     new_chat_contacts_container.innerHTML = null;
     for(var contact of contacts){
-        console.log(contact);
         if(!contact.active){
             const contact_item = document.createElement('div');
             contact_item.classList.add('contact-item');
@@ -29,7 +28,6 @@ new_chat_option.addEventListener('click', function(e){
             e.preventDefault();
     
             const contact_id = this.getAttribute('data-id');
-            console.log(contact_id);
             var contact_name;
     
             for(var contact of contacts){
@@ -41,6 +39,7 @@ new_chat_option.addEventListener('click', function(e){
     
             const chatlist_item = create_chatlist_item(contact_id, contact_name);
             chatlist_container.appendChild(chatlist_item);
+            this.remove();
         });
     }
 
